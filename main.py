@@ -43,6 +43,8 @@ print('Build model...')
 model = Sequential()
 model.add(LSTM(700, input_shape=(maxlen, len(chars)), return_sequences=True))
 model.add(Dropout(0.2))
+model.add(LSTM(700), return_sequences=True)
+model.add(Dropout(0.2))
 model.add(LSTM(700))
 model.add(Dropout(0.2))
 model.add(Dense(len(chars)))
@@ -91,13 +93,14 @@ def on_epoch_end(epoch, logs):
             sys.stdout.write(next_char)
             sys.stdout.flush()
         print()
+    model.save_weights('./models/text_gen.h5')
 
 print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
 
 
 model.fit(x, y,
           batch_size=167,
-          epochs=1,
+          epochs=40,
           callbacks=[print_callback])
 
 model.save_weights('./models/text_gen.h5')
