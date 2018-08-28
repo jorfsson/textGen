@@ -100,7 +100,7 @@ print_callback = LambdaCallback(on_epoch_end=on_epoch_end)
 
 model.fit(x, y,
           batch_size=167,
-          epochs=40,
+          epochs=60,
           callbacks=[print_callback])
 
 model.save_weights('./models/text_gen.h5')
